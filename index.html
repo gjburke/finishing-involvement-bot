@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>UIUC Involvement Bot</title>
+<style>
+  body {
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Salive previewns', Arial, sans-serif;
+    background-color: #333;
+    color: white;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+    }
+    .banner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #000;
+    padding: 10px 20px;
+    color: rgb(202, 201, 201);
+    font-size: 24px; 
+    font-weight: bold;
+  }
+  .banner span {
+    flex: 1;
+    text-align: center;
+    font-size: 24px; 
+  }
+  .banner .date, .banner .project-info {
+    font-size: 18px;
+  }
+  .content {
+  display: flex;
+  justify-content: bottom;
+  align-items: center;
+  height: calc(100vh - 100px); /* Adjusted height */
+}
+  .description {
+    width: 50%;
+    font-size: 18px;
+    padding-right: 20px;
+    text-align: center;
+  }
+  .query-output-container {
+  width: 90%;
+  padding: 10px;
+  padding-bottom: 30px;
+  border: 2px solid #aaa; 
+  border-radius: 15px; 
+  margin-top: 10px; 
+  margin-bottom: 10px; 
+  height: 90%; 
+  overflow-y: auto; 
+}
+.query-input-output-container {
+  width: 50%;
+  padding: 10px;
+  border-radius: 15px; 
+  margin-top: 20px; 
+  margin-bottom: 20px; 
+  height: calc(100% - 20px); /* Adjusted height */
+  overflow-y: hidden;
+}
+.query-input-display {
+  text-align: center;
+}
+@keyframes typing {
+    from { width: 0; }
+    to { width: 100%; }
+}
+
+@keyframes blinkCursor {
+    from { border-right-color: rgba(255,255,255,.75); }
+    to { border-right-color: transparent; }
+}
+
+#typedText {
+    font-family: monospace;
+    border-right: 3px solid rgba(255,255,255,.75);
+    padding: 20px; 
+    display: inline-block; 
+    animation: blinkCursor .75s step-end infinite;
+    text-align: center; 
+    line-height: 1.5;
+}
+
+.content {
+    display: flex;
+    justify-content: bottom;
+    align-items: center;
+    height: 90%;
+}
+
+.query-box {
+  background-color: #555;
+  margin-bottom: 10px;
+  border-radius: 5px;
+  position: relative;
+  padding: 10px;
+  display: block;
+  width: 96%;
+}
+.query-text {
+  animation: fadeIn 0.2s ease-out; 
+  word-break: break-all;
+  word-break: break-all;
+}
+.delete-btn {
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 0 10px;
+  color: #aaa;
+  cursor: pointer;
+  border: none;
+  background: none;
+}
+.fixed-input-container {
+  padding: 10px 20px;
+  background-color: #333;
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+.input-field {
+  padding: 10px;
+  border-radius: 5px;
+  border: none;
+  margin-bottom: 0;
+  margin-right: 10px; 
+  flex-grow: 1; 
+}
+.send-btn {
+  padding: 10px 20px;
+  border: none;
+  background-color: #666;
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.send-btn:hover {
+  background-color: #ffffff;
+}
+#queryOutput {
+  height: calc(100vh - 140px); 
+  overflow-y: auto;
+}
+.history-container {
+  width: 50%;
+  padding: 10px;
+  border-radius: 15px; 
+  margin-top: 25vh; 
+  margin-bottom: 25vh; 
+  height: calc(50%); /* Adjusted height */
+  overflow-y: auto; /* Enable vertical scrollbar when content exceeds container height */
+  position: fixed;
+  right: 0;
+  top: 0;
+  background-color: #333;
+  display: none; /* Initially hide */
+  border: 2px solid #aaa; 
+}
+.history-toggle-btn {
+  position: fixed;
+  top: 82%;
+  right: 0;
+  transform: translateY(-50%);
+  background-color: #666;
+  color: white;
+  padding: 10px;
+  border-radius: 5px 0 0 5px;
+  cursor: pointer;
+}
+.history-toggle-btn:hover {
+  background-color: #ffffff;
+}
+#history {
+  font-weight: bold;
+  font-size: 20px;
+}
+.history {
+  font-weight: lighter;
+  font-size: 12px;
+  padding: 5px;
+}
+.history:hover {
+  cursor: hover;
+}
+.hide {
+  display: none;
+}
+</style>
+</head>
+<body>
+  <div class="banner">
+    <span>UIUC INVOLVEMENT BOT</span>
+    <div class="date" id="currentDateTime"></div>
+  </div>
+  <div class="content">
+    <div class="query-input-output-container">
+      <div class="query-input-display" id="inputDisplay">
+        These clubs match your interests:
+      </div>
+      <div class="query-output-container" id="queryOutput"></div>
+    </div>
+    <div class="description" id="typedText">
+      Enter your interests below to find matching clubs:
+      <div class="example-queries">
+        <span class="example-query" onclick="useExampleQuery('Sports')">Sports</span>
+        <span class="example-query" onclick="useExampleQuery('Music')">Music</span>
+        <span class="example-query" onclick="useExampleQuery('Art')">Art</span>
+        <span class="example-query" onclick="useExampleQuery('Dance')">Dance</span>
+        <span class="example-query" onclick="useExampleQuery('Programming')">Programming</span>
+      </div>
+    </div>
+  </div>
+  <div class="fixed-input-container">
+    <input type="text" id="queryInput" class="input-field" placeholder="Enter your interests...">
+    <button id="submitBtn" class="send-btn" style="margin-left: 10px;">Submit</button>
+  </div>
+  <div class="history-toggle-btn" id="historyToggleBtn" onclick="toggleHistory()">History</div>
+  <div class="history-container" id="historyContainer">
+    <div id="history">
+      <strong>History</strong>
+    </div>
+  </div>
+
+  <script>
+    var queryHistory = [];
+    var firstInput = true;
+    var historyContainer = document.getElementById('historyContainer');
+  
+    // Function to update date and time
+    function updateDateTime() {
+      const now = new Date();
+      const formattedDateTime = now.toLocaleDateString('en-US', {
+        weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
+      }) + '  |  ' + (now.toLocaleTimeString('en-US'));
+      document.getElementById('currentDateTime').textContent = formattedDateTime;
+    }
+  
+    // Update date and time on page load and every second
+    document.addEventListener('DOMContentLoaded', function(event) {
+      updateDateTime();
+      setInterval(updateDateTime, 1000);
+    });
+  
+    // Event listener for submit button click
+    document.getElementById('submitBtn').addEventListener('click', submitForm);
+  
+    // Event listener for pressing Enter key in the input field
+    document.getElementById('queryInput').addEventListener('keypress', function(event) {
+      if (event.key === 'Enter') {
+        submitForm();
+      }
+    });
+  
+    // Function to handle form submission
+    function submitForm() {
+      var input = document.getElementById('queryInput').value.trim();
+      var output = document.getElementById('queryOutput');
+      var displayQuery = document.getElementById('inputDisplay');
+      var typedText = document.getElementById('typedText');
+      var exampleQueries = document.querySelector('.description .example-queries');
+
+      if (input === '') {
+        return;
+      }
+
+      displayQuery.textContent = "Interests: " + input;
+
+      // Here you would replace the below dummy code with actual logic to find matching clubs based on user input.
+      var matchingClubs = [
+        "Club A",
+        "Club B",
+        "Club C",
+        "Club D"
+      ];
+
+      output.innerHTML = ""; // Clear previous results
+
+      matchingClubs.forEach(club => {
+        var queryDiv = document.createElement('div');
+        queryDiv.className = 'query-box';
+
+        var queryText = document.createElement('span');
+        queryText.textContent = club;
+        queryText.className = 'query-text';
+        queryDiv.appendChild(queryText);
+
+        output.appendChild(queryDiv);
+      });
+
+      // Add the query to history if it's not already there
+      if (!queryHistory.includes(input)) {
+        queryHistory.push(input);
+        updateHistory();
+      }
+
+      // Hide "Enter your interests below" after the first input
+      if (firstInput) {
+        firstInput = false;
+        displayQuery.classList.add('hide');
+        typedText.classList.remove('hide');
+        exampleQueries.classList.remove('hide');
+      }
+    }
+  
+    // Function to update the history container with query history
+    function updateHistory() {
+      var historyContainer = document.getElementById('history');
+      historyContainer.innerHTML = "<strong>History</strong>";
+  
+      queryHistory.forEach(query => {
+        var historyItem = document.createElement('div');
+        historyItem.className = 'history';
+        historyItem.textContent = query;
+        historyItem.addEventListener('click', function() {
+          document.getElementById('queryInput').value = query;
+          submitForm();
+        });
+        historyContainer.appendChild(historyItem);
+      });
+    }
+  
+    // Function to handle clicking on example queries
+    function useExampleQuery(query) {
+      document.getElementById('queryInput').value = query;
+      submitForm();
+    }
+  
+    // Function to toggle visibility of history container
+    function toggleHistory() {
+      if (historyContainer.style.display === 'none') {
+        historyContainer.style.display = 'block';
+      } else {
+        historyContainer.style.display = 'none';
+      }
+    }
+  
+    // Event listener to close history container when clicking outside of it
+    document.body.addEventListener('click', function(event) {
+      if (!historyContainer.contains(event.target) && event.target.id !== 'historyToggleBtn') {
+        historyContainer.style.display = 'none';
+      }
+    });
+  </script>
+</body>
+</html>
