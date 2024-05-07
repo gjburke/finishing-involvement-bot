@@ -26,13 +26,13 @@
     background-color: #000;
     padding: 10px 20px;
     color: rgb(202, 201, 201);
-    font-size: 24px; 
+    font-size: 24px;
     font-weight: bold;
   }
   .banner span {
     flex: 1;
     text-align: center;
-    font-size: 24px; 
+    font-size: 24px;
   }
   .banner .date, .banner .project-info {
     font-size: 18px;
@@ -40,7 +40,7 @@
   .content {
   display: flex;
   justify-content: bottom;
-  align-items: center;
+  align-items: left;
   height: calc(100vh - 100px); /* Adjusted height */
 }
   .description {
@@ -53,19 +53,19 @@
   width: 90%;
   padding: 10px;
   padding-bottom: 30px;
-  border: 2px solid #aaa; 
-  border-radius: 15px; 
-  margin-top: 10px; 
-  margin-bottom: 10px; 
-  height: 90%; 
-  overflow-y: auto; 
+  border: 2px solid #aaa;
+  border-radius: 15px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  height: 90%;
+  overflow-y: auto;
 }
 .query-input-output-container {
   width: 50%;
   padding: 10px;
-  border-radius: 15px; 
-  margin-top: 20px; 
-  margin-bottom: 20px; 
+  border-radius: 15px;
+  margin-top: 20px;
+  margin-bottom: 20px;
   height: calc(100% - 20px); /* Adjusted height */
   overflow-y: hidden;
 }
@@ -85,10 +85,10 @@
 #typedText {
     font-family: monospace;
     border-right: 3px solid rgba(255,255,255,.75);
-    padding: 20px; 
-    display: inline-block; 
+    padding: 20px;
+    display: inline-block;
     animation: blinkCursor .75s step-end infinite;
-    text-align: center; 
+    text-align: center;
     line-height: 1.5;
 }
 
@@ -109,7 +109,7 @@
   width: 96%;
 }
 .query-text {
-  animation: fadeIn 0.2s ease-out; 
+  animation: fadeIn 0.2s ease-out;
   word-break: break-all;
   word-break: break-all;
 }
@@ -139,8 +139,8 @@
   border-radius: 5px;
   border: none;
   margin-bottom: 0;
-  margin-right: 10px; 
-  flex-grow: 1; 
+  margin-right: 10px;
+  flex-grow: 1;
 }
 .send-btn {
   padding: 10px 20px;
@@ -154,15 +154,15 @@
   background-color: #ffffff;
 }
 #queryOutput {
-  height: calc(100vh - 140px); 
+  height: calc(100vh - 140px);
   overflow-y: auto;
 }
 .history-container {
   width: 50%;
   padding: 10px;
-  border-radius: 15px; 
-  margin-top: 25vh; 
-  margin-bottom: 25vh; 
+  border-radius: 15px;
+  margin-top: 25vh;
+  margin-bottom: 25vh;
   height: calc(50%); /* Adjusted height */
   overflow-y: auto; /* Enable vertical scrollbar when content exceeds container height */
   position: fixed;
@@ -170,7 +170,7 @@
   top: 0;
   background-color: #333;
   display: none; /* Initially hide */
-  border: 2px solid #aaa; 
+  border: 2px solid #aaa;
 }
 .history-toggle-btn {
   position: fixed;
@@ -196,7 +196,7 @@
   padding: 5px;
 }
 .history:hover {
-  cursor: hover;
+  cursor: pointer;
 }
 .hide {
   display: none;
@@ -241,7 +241,7 @@
     var queryHistory = [];
     var firstInput = true;
     var historyContainer = document.getElementById('historyContainer');
-  
+
     // Function to update date and time
     function updateDateTime() {
       const now = new Date();
@@ -250,79 +250,114 @@
       }) + '  |  ' + (now.toLocaleTimeString('en-US'));
       document.getElementById('currentDateTime').textContent = formattedDateTime;
     }
-  
+
+    // For subitting queries and getting results
+    function sendJSONToBackend(jsonFile) {
+
+    }
+
     // Update date and time on page load and every second
     document.addEventListener('DOMContentLoaded', function(event) {
       updateDateTime();
       setInterval(updateDateTime, 1000);
     });
-  
+
     // Event listener for submit button click
     document.getElementById('submitBtn').addEventListener('click', submitForm);
-  
+
     // Event listener for pressing Enter key in the input field
     document.getElementById('queryInput').addEventListener('keypress', function(event) {
       if (event.key === 'Enter') {
         submitForm();
       }
     });
-  
+
     // Function to handle form submission
     function submitForm() {
-      var input = document.getElementById('queryInput').value.trim();
-      var output = document.getElementById('queryOutput');
-      var displayQuery = document.getElementById('inputDisplay');
-      var typedText = document.getElementById('typedText');
-      var exampleQueries = document.querySelector('.description .example-queries');
+        var input = document.getElementById('queryInput').value.trim();
+        var output = document.getElementById('queryOutput');
+        //var displayQuery = document.getElementById('inputDisplay');
+        var typedText = document.getElementById('typedText');
+        var exampleQueries = document.querySelector('.description .example-queries');
 
-      if (input === '') {
-        return;
-      }
+        if (input === '') {
+            return;
+        }
 
-      displayQuery.textContent = "Interests: " + input;
+        //displayQuery.textContent = "Interests: " + input;
 
-      // Here you would replace the below dummy code with actual logic to find matching clubs based on user input.
-      var matchingClubs = [
-        "Club A",
-        "Club B",
-        "Club C",
-        "Club D"
-      ];
+        // Dummy code for sending query in, getting matching clubs back
 
-      output.innerHTML = ""; // Clear previous results
+        // Send to backend
+        var headers = {
+            'Content-Type': 'application/json',
+            'Access-Control-Allow-Origin': '*',
+        }
 
-      matchingClubs.forEach(club => {
-        var queryDiv = document.createElement('div');
-        queryDiv.className = 'query-box';
+        var jsonData = JSON.stringify(input.value);
+        // Send data to backend
+        const formData = new FormData();
+        formData.append("query", jsonFile);
 
-        var queryText = document.createElement('span');
-        queryText.textContent = club;
-        queryText.className = 'query-text';
-        queryDiv.appendChild(queryText);
+        const backendURL = "https://gjburke33.pythonanywhere.com/submit";
 
-        output.appendChild(queryDiv);
-      });
+        fetch(backendURL, {
+            method: 'POST',
+            headers: headers,
+            body: formData,
+        })
+        .then(response => response.json())
+        .then(data => console.log("Success:", data))
+        .catch(error => console.error("Error:", error));
 
-      // Add the query to history if it's not already there
-      if (!queryHistory.includes(input)) {
-        queryHistory.push(input);
-        updateHistory();
-      }
+        // Recieve stuff
+        fetch('https://gjburke33.pythonanywhere.com/response', {
+            method: 'GET',
+            headers: headers,
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log('Model Prediction:', data);
+            console.log('Type:', typeof data);
+            console.log("Data outside: ", data);
+            var matchingClubs = [data];
 
-      // Hide "Enter your interests below" after the first input
-      if (firstInput) {
-        firstInput = false;
-        displayQuery.classList.add('hide');
-        typedText.classList.remove('hide');
-        exampleQueries.classList.remove('hide');
-      }
+            output.innerHTML = ""; // Clear previous results
+
+            matchingClubs.forEach(club => {
+            var queryDiv = document.createElement('div');
+            queryDiv.className = 'query-box';
+
+            var queryText = document.createElement('span');
+            queryText.textContent = club;
+            queryText.className = 'query-text';
+            queryDiv.appendChild(queryText);
+
+            output.appendChild(queryDiv);
+            });
+
+            // Add the query to history if it's not already there
+            if (!queryHistory.includes(input)) {
+                queryHistory.push(input);
+                updateHistory();
+            }
+        })
+        .catch(error => console.error('Error:', error));
+
+        // Hide "Enter your interests below" after the first input
+        if (firstInput) {
+            firstInput = false;
+            //displayQuery.classList.add('hide');
+            typedText.classList.remove('hide');
+            exampleQueries.classList.remove('hide');
+        }
     }
-  
+
     // Function to update the history container with query history
     function updateHistory() {
       var historyContainer = document.getElementById('history');
       historyContainer.innerHTML = "<strong>History</strong>";
-  
+
       queryHistory.forEach(query => {
         var historyItem = document.createElement('div');
         historyItem.className = 'history';
@@ -334,13 +369,13 @@
         historyContainer.appendChild(historyItem);
       });
     }
-  
+
     // Function to handle clicking on example queries
     function useExampleQuery(query) {
       document.getElementById('queryInput').value = query;
       submitForm();
     }
-  
+
     // Function to toggle visibility of history container
     function toggleHistory() {
       if (historyContainer.style.display === 'none') {
@@ -349,7 +384,7 @@
         historyContainer.style.display = 'none';
       }
     }
-  
+
     // Event listener to close history container when clicking outside of it
     document.body.addEventListener('click', function(event) {
       if (!historyContainer.contains(event.target) && event.target.id !== 'historyToggleBtn') {
