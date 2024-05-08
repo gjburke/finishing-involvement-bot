@@ -40,7 +40,7 @@
   .content {
   display: flex;
   justify-content: bottom;
-  align-items: left;
+  align-items: center;
   height: calc(100vh - 100px); /* Adjusted height */
 }
   .description {
@@ -205,7 +205,7 @@
 </head>
 <body>
   <div class="banner">
-    <span>UIUC INVOLVEMENT BOT</span>
+    <span style="text-align: left;">UIUC INVOLVEMENT BOT</span>
     <div class="date" id="currentDateTime"></div>
   </div>
   <div class="content">
@@ -251,11 +251,6 @@
       document.getElementById('currentDateTime').textContent = formattedDateTime;
     }
 
-    // For subitting queries and getting results
-    function sendJSONToBackend(jsonFile) {
-
-    }
-
     // Update date and time on page load and every second
     document.addEventListener('DOMContentLoaded', function(event) {
       updateDateTime();
@@ -290,16 +285,15 @@
 
         // Send to backend
         var headers = {
-            'Content-Type': 'application/json',
             'Access-Control-Allow-Origin': '*',
         }
 
-        var jsonData = JSON.stringify(input.value);
+        var jsonData = JSON.stringify(input);
         // Send data to backend
         const formData = new FormData();
-        formData.append("query", jsonFile);
+        formData.append("query", jsonData);
 
-        const backendURL = "https://gjburke33.pythonanywhere.com/submit";
+        const backendURL = 'https://gjburke33.pythonanywhere.com/submit';
 
         fetch(backendURL, {
             method: 'POST',
@@ -307,19 +301,8 @@
             body: formData,
         })
         .then(response => response.json())
-        .then(data => console.log("Success:", data))
-        .catch(error => console.error("Error:", error));
-
-        // Recieve stuff
-        fetch('https://gjburke33.pythonanywhere.com/response', {
-            method: 'GET',
-            headers: headers,
-        })
-        .then(response => response.json())
         .then(data => {
-            console.log('Model Prediction:', data);
-            console.log('Type:', typeof data);
-            console.log("Data outside: ", data);
+            console.log("Success:", data)
             var matchingClubs = [data];
 
             output.innerHTML = ""; // Clear previous results
@@ -342,7 +325,7 @@
                 updateHistory();
             }
         })
-        .catch(error => console.error('Error:', error));
+        .catch(error => console.error("Error:", error));
 
         // Hide "Enter your interests below" after the first input
         if (firstInput) {
