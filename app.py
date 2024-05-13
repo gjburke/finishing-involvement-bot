@@ -19,10 +19,10 @@ classification_labels = ["Arts","Athletics","Business","Culture","Government","P
 intensity_labels = ["1", "2", "3"]
 
 max_length = 35
-intensity_tokenizer = joblib.load('/home/gjburke33/involvement-bot/models/tokenizer_2500.joblib')
-intensity_model = keras.models.load_model("/home/gjburke33/involvement-bot/models/intensity_model.keras")
-category_tokenizer = joblib.load('/home/gjburke33/involvement-bot/models/tokenizer_10000.joblib')
-category_model = keras.models.load_model("/home/gjburke33/involvement-bot/models/category_model.keras")
+intensity_tokenizer = joblib.load('/models/tokenizer_2500.joblib')
+intensity_model = keras.models.load_model("/models/intensity_model.keras")
+category_tokenizer = joblib.load('/models/tokenizer_10000.joblib')
+category_model = keras.models.load_model("/models/category_model.keras")
 
 # Routes for loading the template of the main page and for posting queries and getting results
 
