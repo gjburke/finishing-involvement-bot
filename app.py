@@ -40,9 +40,6 @@ def submit():
         query_padded = pad_sequences(query_seq, maxlen=max_length, padding='post')
         # intensity: get prediction
         intensity_prediction = intensity_model.predict(query_padded)
-
-        return make_response(jsonify("Worked up to here"), 200)
-
         # category: tokensize and pad query
         query_seq = category_tokenizer.texts_to_sequences([query])
         query_padded = pad_sequences(query_seq, maxlen=max_length, padding='post')
