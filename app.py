@@ -2,6 +2,7 @@
 # Model imports
 import joblib
 import numpy as np
+import os
 from tensorflow import keras
 from keras.preprocessing.text import Tokenizer
 from keras_preprocessing.sequence import pad_sequences
@@ -19,10 +20,11 @@ classification_labels = ["Arts","Athletics","Business","Culture","Government","P
 intensity_labels = ["1", "2", "3"]
 
 max_length = 35
-intensity_tokenizer = joblib.load('/models/tokenizer_2500.joblib')
-intensity_model = keras.models.load_model("/models/intensity_model.keras")
-category_tokenizer = joblib.load('/models/tokenizer_10000.joblib')
-category_model = keras.models.load_model("/models/category_model.keras")
+dirname = os.path.dirname(__file__)
+intensity_tokenizer = joblib.load(os.path.join(dirname, '/models/tokenizer_2500.joblib'))
+intensity_model = keras.models.load_model(os.path.join(dirname, "/models/intensity_model.keras"))
+category_tokenizer = joblib.load(os.path.join(dirname, '/models/tokenizer_10000.joblib'))
+category_model = keras.models.load_model(os.path.join(dirname, "/models/category_model.keras"))
 
 # Routes for loading the template of the main page and for posting queries and getting results
 
