@@ -4,6 +4,7 @@ The idea for the project and not all of this code is mine, look at original file
 # finishing-involvement-bot
 
 Find project page at https://finishing-involvement-bot.onrender.com/
+
 *Note: May take up to a minute to load, this is due to the hosting service spinning down the website with inactivity*
 
 ## Motivation
