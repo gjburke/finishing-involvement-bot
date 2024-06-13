@@ -1,5 +1,6 @@
 
 # Model imports
+import sqlite3
 import joblib
 import numpy as np
 import os
@@ -26,6 +27,10 @@ intensity_model = keras.models.load_model(os.path.join(dirname, "models/intensit
 category_tokenizer = joblib.load(os.path.join(dirname, 'models/tokenizer_10000.joblib'))
 category_model = keras.models.load_model(os.path.join(dirname, "models/category_model.keras"))
 
+# Loading a connection to the database for the post request to use
+
+connection = sqlite3.connect("clubs_database.db")
+
 # Routes for loading the template of the main page and for posting queries and getting results
 
 @app.route('/')
@@ -47,8 +52,11 @@ def submit():
         query_padded = pad_sequences(query_seq, maxlen=max_length, padding='post')
         # cateogry: get prediction
         category_prediction = category_model.predict(query_padded)
-        # Send back data
-        response = make_response(jsonify(classification_labels[np.argmax(category_prediction)] + " " + intensity_labels[np.argmax(intensity_prediction)]), 200)
+        # get list of category and intensity matches from database
+        cursor = connection.cursor()
+        names, links = cursor.execute(f"SELECT name, link FROM clubs WHERE classification={} AND intensity={}".format(category_prediction, intensity_prediction)).fetchall()
+        package = [names, links]
+        response = make_response(jsonify(package), 200)
         response.headers.add('Access-Control-Allow-Origin', '*')
         return response
     else:

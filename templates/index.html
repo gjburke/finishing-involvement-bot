@@ -303,7 +303,7 @@
         .then(response => response.json())
         .then(data => {
             console.log("Success:", data)
-            var matchingClubs = [data];
+            var matchingClubs = data[0];
 
             output.innerHTML = ""; // Clear previous results
 
