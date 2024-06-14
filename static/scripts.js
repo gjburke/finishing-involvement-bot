@@ -35,7 +35,7 @@ function submitForm() {
 
     // Send to backend
     var headers = {
-        'Access-Control-Allow-Origin': 'http://127.0.0.1:5000/',
+        'Access-Control-Allow-Origin': 'https://finishing-involvement-bot.onrender.com/',
     }
 
     var jsonData = JSON.stringify(input);
@@ -43,8 +43,7 @@ function submitForm() {
     const formData = new FormData();
     formData.append("query", jsonData);
 
-    //const backendURL = 'https://finishing-involvement-bot.onrender.com/submit';
-    const backendURL = 'http://127.0.0.1:5000/submit';
+    const backendURL = 'https://finishing-involvement-bot.onrender.com/submit';
 
     fetch(backendURL, {
         method: 'POST',

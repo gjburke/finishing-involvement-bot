@@ -17,7 +17,7 @@ app = Flask(__name__)
 
 # Loading the models and tokensizers for intensity and category, along with max_length for padding, along with model labels
 
-classification_labels = ["Arts","Atheltics","Business","Culture","Government","Professional","Religion","Service","Social","STEM"]
+classification_labels = ["Arts","Athletics","Business","Culture","Government","Professional","Religion","Service","Social","STEM"]
 intensity_labels = ["1", "2", "3"]
 
 max_length = 35
@@ -35,7 +35,7 @@ def index():
 
 @app.route('/submit', methods=["GET", "POST"])
 def submit():
-    url = 'http://127.0.0.1:5000/'
+    url = 'https://finishing-involvement-bot.onrender.com/'
     if request.method == "POST":
         try:
             # get query
