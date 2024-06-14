@@ -20,7 +20,8 @@ app = Flask(__name__)
 classification_labels = ["Arts","Athletics","Business","Culture","Government","Professional","Religion","Service","Social","STEM"]
 intensity_labels = ["1", "2", "3"]
 
-max_length = 35
+max_length_intensity = 31
+max_length_category = 35
 dirname = os.path.dirname(__file__)
 intensity_tokenizer = joblib.load(os.path.join(dirname, 'models/tokenizer_intensity.joblib'))
 intensity_model = keras.models.load_model(os.path.join(dirname, "models/intensity_model.keras"))
@@ -42,13 +43,13 @@ def submit():
             query = request.form.get('query')
             # intensity: tokensize and pad query
             query_seq = intensity_tokenizer.texts_to_sequences([query])
-            query_padded = pad_sequences(query_seq, maxlen=max_length, padding='post')
+            query_padded = pad_sequences(query_seq, maxlen=max_length_intensity, padding='post')
             # intensity: get prediction
             intensity_prediction = intensity_model.predict(query_padded)
             intensity_prediction = intensity_labels[np.argmax(intensity_prediction)]
             # category: tokensize and pad query
             query_seq = category_tokenizer.texts_to_sequences([query])
-            query_padded = pad_sequences(query_seq, maxlen=max_length, padding='post')
+            query_padded = pad_sequences(query_seq, maxlen=max_length_category, padding='post')
             # cateogry: get prediction
             category_prediction = category_model.predict(query_padded)
             category_prediction = classification_labels[np.argmax(category_prediction)]
