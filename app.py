@@ -22,9 +22,9 @@ intensity_labels = ["1", "2", "3"]
 
 max_length = 35
 dirname = os.path.dirname(__file__)
-intensity_tokenizer = joblib.load(os.path.join(dirname, 'models/tokenizer_2500.joblib'))
+intensity_tokenizer = joblib.load(os.path.join(dirname, 'models/tokenizer_intensity.joblib'))
 intensity_model = keras.models.load_model(os.path.join(dirname, "models/intensity_model.keras"))
-category_tokenizer = joblib.load(os.path.join(dirname, 'models/tokenizer_10000.joblib'))
+category_tokenizer = joblib.load(os.path.join(dirname, 'models/tokenizer_category.joblib'))
 category_model = keras.models.load_model(os.path.join(dirname, "models/category_model.keras"))
 
 # Routes for loading the template of the main page and for posting queries and getting results
