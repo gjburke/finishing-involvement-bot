@@ -1,0 +1,207 @@
+
+body {
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Salive previewns', Arial, sans-serif;
+  background-color: #333;
+  color: white;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+  }
+  .banner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #000;
+  padding: 10px 20px;
+  color: rgb(202, 201, 201);
+  font-size: 24px;
+  font-weight: bold;
+}
+.banner span {
+  flex: 1;
+  text-align: center;
+  font-size: 24px;
+}
+.banner .date, .banner .project-info {
+    font-size: 18px;
+}
+.content {
+  display: flex;
+  justify-content: bottom;
+  align-items: center;
+  height: calc(100vh - 100px); /* Adjusted height */
+}
+.description {
+    width: 50%;
+    font-size: 18px;
+    padding-right: 20px;
+    text-align: center;
+}
+.query-output-container {
+  width: 90%;
+  padding: 10px;
+  padding-bottom: 30px;
+  border: 2px solid #aaa;
+  border-radius: 15px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  height: 90%;
+  overflow-y: auto;
+}
+.query-input-output-container {
+  width: 50%;
+  padding: 10px;
+  border-radius: 15px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  height: calc(100% - 20px); /* Adjusted height */
+  overflow-y: hidden;
+}
+.query-input-display {
+  text-align: center;
+}
+@keyframes typing {
+    from { width: 0; }
+    to { width: 100%; }
+}
+
+@keyframes blinkCursor {
+    from { border-right-color: rgba(255,255,255,.75); }
+    to { border-right-color: transparent; }
+}
+
+#typedText {
+    font-family: monospace;
+    border-right: 3px solid rgba(255,255,255,.75);
+    padding: 20px;
+    display: inline-block;
+    animation: blinkCursor .75s step-end infinite;
+    text-align: center;
+    line-height: 1.5;
+}
+
+.content {
+    display: flex;
+    justify-content: bottom;
+    align-items: center;
+    height: 90%;
+}
+
+.query-box {
+  background-color: #555;
+  margin-bottom: 10px;
+  border-radius: 5px;
+  position: relative;
+  padding: 10px;
+  display: block;
+  width: 96%;
+}
+.query-text {
+  animation: fadeIn 0.2s ease-out;
+  word-break: break-all;
+  word-break: break-all;
+  color: white;
+  text-decoration: none;
+}
+.query-text:hover {
+  cursor: pointer;
+  text-decoration: underline;
+}
+.delete-btn {
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 0 10px;
+  color: #aaa;
+  cursor: pointer;
+  border: none;
+  background: none;
+}
+.fixed-input-container {
+  padding: 10px 20px;
+  background-color: #333;
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+.input-field {
+  padding: 10px;
+  border-radius: 5px;
+  border: none;
+  margin-bottom: 0;
+  margin-right: 10px;
+  flex-grow: 1;
+}
+.send-btn {
+  padding: 10px 20px;
+  border: none;
+  background-color: #666;
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.send-btn:hover {
+  background-color: #ffffff;
+}
+#queryOutput {
+  height: calc(100vh - 140px);
+  overflow-y: auto;
+}
+.history-container {
+  width: 50%;
+  padding: 10px;
+  border-radius: 15px;
+  margin-top: 25vh;
+  margin-bottom: 25vh;
+  height: calc(50%); /* Adjusted height */
+  overflow-y: auto; /* Enable vertical scrollbar when content exceeds container height */
+  position: fixed;
+  right: 0;
+  top: 0;
+  background-color: #333;
+  display: none; /* Initially hide */
+  border: 2px solid #aaa;
+}
+.history-toggle-btn {
+  position: fixed;
+  top: 82%;
+  right: 0;
+  transform: translateY(-50%);
+  background-color: #666;
+  color: white;
+  padding: 10px;
+  border-radius: 5px 0 0 5px;
+  cursor: pointer;
+}
+.history-toggle-btn:hover {
+  background-color: #ffffff;
+}
+#history {
+  font-weight: bold;
+  font-size: 20px;
+}
+.history {
+  font-weight: lighter;
+  font-size: 12px;
+  padding: 5px;
+}
+.history:hover {
+  cursor: pointer;
+}
+.hide {
+  display: none;
+}
+
+.example-query:hover {
+  cursor: pointer;
+}
